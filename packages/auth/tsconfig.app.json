@@ -1,0 +1,4 @@
+{
+  "extends": "@paideia/tsconfig/base",
+  "include": ["src"]
+}
