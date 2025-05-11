@@ -11,13 +11,15 @@ type PermissionsByRole = (
 
 export const permissions: Record<Role, PermissionsByRole> = {
   ADMIN(_, { can }) {
-    can('manage', 'User')
-    can('manage', 'Course')
-    can('manage', 'Module')
-    can('manage', 'Lesson')
-    can('manage', 'Enrollment')
-    can('manage', 'Progress')
-    can('manage', 'CourseMaterial')
+    can('manage', [
+      'User',
+      'Course',
+      'Module',
+      'Lesson',
+      'Enrollment',
+      'Progress',
+      'CourseMaterial',
+    ])
   },
   INSTRUCTOR(user, { can }) {
     const courseInstructorCondition: MongoQuery = {
@@ -31,24 +33,25 @@ export const permissions: Record<Role, PermissionsByRole> = {
     }
 
     can('create', 'Course')
-    can('read', 'Course', { instructorId: user.id })
-    can('update', 'Course', { instructorId: user.id })
-    can('delete', 'Course', { instructorId: user.id })
+    can(['read', 'update', 'delete'], 'Course', { instructorId: user.id })
 
-    can('create', 'Module', courseInstructorCondition)
-    can('read', 'Module', courseInstructorCondition)
-    can('update', 'Module', courseInstructorCondition)
-    can('delete', 'Module', courseInstructorCondition)
+    can(
+      ['create', 'read', 'update', 'delete'],
+      'Module',
+      courseInstructorCondition,
+    )
 
-    can('create', 'Lesson', moduleCourseInstructorCondition)
-    can('read', 'Lesson', moduleCourseInstructorCondition)
-    can('update', 'Lesson', moduleCourseInstructorCondition)
-    can('delete', 'Lesson', moduleCourseInstructorCondition)
+    can(
+      ['create', 'read', 'update', 'delete'],
+      'Lesson',
+      moduleCourseInstructorCondition,
+    )
 
-    can('create', 'CourseMaterial', courseInstructorCondition)
-    can('read', 'CourseMaterial', courseInstructorCondition)
-    can('update', 'CourseMaterial', courseInstructorCondition)
-    can('delete', 'CourseMaterial', courseInstructorCondition)
+    can(
+      ['create', 'read', 'update', 'delete'],
+      'CourseMaterial',
+      courseInstructorCondition,
+    )
 
     can('read', 'Enrollment', courseInstructorCondition)
     can('read', 'Progress', lessonModuleCourseInstructorCondition)
@@ -62,12 +65,10 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('read', 'Module')
     can('read', 'Lesson')
     can('create', 'Progress')
-    can('read', 'Progress', { userId: user.id })
-    can('update', 'Progress', { userId: user.id })
+    can(['read', 'update'], 'Progress', { userId: user.id })
 
     can('read', 'CourseMaterial')
 
-    can('read', 'User', { id: user.id })
-    can('update', 'User', { id: user.id })
+    can(['read', 'update'], 'User', { id: user.id })
   },
 }
