@@ -2,6 +2,10 @@ import { z } from 'zod'
 
 import { courseSchema } from './course'
 
+// const courseForLessonSchema = courseSchema.pick({
+//   instructorId: true,
+// })
+
 export const moduleSchema = z.object({
   __typename: z.literal('Module').default('Module'),
   id: z.string().uuid(),
