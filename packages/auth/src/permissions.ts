@@ -1,4 +1,4 @@
-import type { AbilityBuilder } from '@casl/ability'
+import type { AbilityBuilder, MongoQuery } from '@casl/ability'
 
 import type { AppAbility } from '.'
 import type { User } from './models/user'
@@ -20,34 +20,38 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('manage', 'CourseMaterial')
   },
   INSTRUCTOR(user, { can }) {
+    const courseInstructorCondition: MongoQuery = {
+      'course.instructorId': user.id,
+    }
+    const moduleCourseInstructorCondition: MongoQuery = {
+      'module.course.instructorId': user.id,
+    }
+    const lessonModuleCourseInstructorCondition: MongoQuery = {
+      'lesson.module.course.instructorId': user.id,
+    }
+
     can('create', 'Course')
-    can('read', 'Course')
+    can('read', 'Course', { instructorId: user.id })
     can('update', 'Course', { instructorId: user.id })
     can('delete', 'Course', { instructorId: user.id })
 
-    can('create', 'Module', undefined, { course: { instructorId: user.id } })
-    can('read', 'Module')
-    can('update', 'Module', undefined, { course: { instructorId: user.id } })
-    can('delete', 'Module', undefined, { course: { instructorId: user.id } })
+    can('create', 'Module', courseInstructorCondition)
+    can('read', 'Module', courseInstructorCondition)
+    can('update', 'Module', courseInstructorCondition)
+    can('delete', 'Module', courseInstructorCondition)
 
-    can('create', 'Lesson', undefined, {
-      module: { course: { instructorId: user.id } },
-    })
-    can('read', 'Lesson')
-    can('update', 'Lesson', undefined, {
-      module: { course: { instructorId: user.id } },
-    })
-    can('delete', 'Lesson', undefined, {
-      module: { course: { instructorId: user.id } },
-    })
+    can('create', 'Lesson', moduleCourseInstructorCondition)
+    can('read', 'Lesson', moduleCourseInstructorCondition)
+    can('update', 'Lesson', moduleCourseInstructorCondition)
+    can('delete', 'Lesson', moduleCourseInstructorCondition)
 
-    can('create', 'CourseMaterial', { course: { instructorId: user.id } })
-    can('read', 'CourseMaterial')
-    can('update', 'CourseMaterial', { course: { instructorId: user.id } })
-    can('delete', 'CourseMaterial', { course: { instructorId: user.id } })
+    can('create', 'CourseMaterial', courseInstructorCondition)
+    can('read', 'CourseMaterial', courseInstructorCondition)
+    can('update', 'CourseMaterial', courseInstructorCondition)
+    can('delete', 'CourseMaterial', courseInstructorCondition)
 
-    can('read', 'Enrollment', { course: { instructorId: user.id } })
-    can('read', 'Progress')
+    can('read', 'Enrollment', courseInstructorCondition)
+    can('read', 'Progress', lessonModuleCourseInstructorCondition)
     can('read', 'User')
   },
   STUDENT(user, { can }) {
