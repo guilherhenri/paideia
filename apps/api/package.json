@@ -9,6 +9,7 @@
     "@fastify/swagger": "^9.5.1",
     "@fastify/swagger-ui": "^5.2.2",
     "@paideia/auth": "workspace:*",
+    "@prisma/client": "6.7.0",
     "dotenv": "^16.5.0",
     "fastify": "^5.3.2",
     "fastify-type-provider-zod": "^4.0.2",
@@ -19,6 +20,7 @@
     "@paideia/prettier": "workspace:*",
     "@paideia/tsconfig": "workspace:*",
     "@types/node": "^22.15.17",
+    "prisma": "^6.7.0",
     "tsx": "^4.19.4"
   },
   "prettier": "@paideia/prettier",
