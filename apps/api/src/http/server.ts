@@ -9,7 +9,9 @@ import {
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 
-import { env } from '../env'
+import { env } from '@/env'
+
+import { routes } from './routes'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -30,6 +32,10 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
+})
+
+app.register(routes, {
+  prefix: '/api',
 })
 
 app

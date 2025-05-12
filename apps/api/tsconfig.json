@@ -1,4 +1,10 @@
 {
   "extends": "@paideia/tsconfig/node",
-  "include": ["src"]
+  "include": ["src"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "baseUrl": "./"
+  }
 }
