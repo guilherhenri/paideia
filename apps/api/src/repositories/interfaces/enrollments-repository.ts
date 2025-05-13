@@ -27,6 +27,6 @@ export interface EnrollmentsRepository {
   }): Promise<EnrollmentRelations['Basic'][]>
 
   create(data: Prisma.EnrollmentUncheckedCreateInput): Promise<Enrollment>
-  save(data: Enrollment): Promise<Enrollment>
+  save(data: Enrollment): Promise<void>
   delete(id: string): Promise<void>
 }

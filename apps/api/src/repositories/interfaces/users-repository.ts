@@ -23,6 +23,6 @@ export interface UsersRepository {
   list(params?: { role?: Role }): Promise<UserRelations['Basic'][]>
 
   create(data: Prisma.UserUncheckedCreateInput): Promise<User>
-  save(data: User): Promise<User>
+  save(data: User): Promise<void>
   delete(id: string): Promise<void>
 }

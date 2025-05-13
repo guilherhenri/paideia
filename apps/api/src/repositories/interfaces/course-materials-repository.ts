@@ -22,6 +22,6 @@ export interface CourseMaterialsRepository {
   create(
     data: Prisma.CourseMaterialUncheckedCreateInput,
   ): Promise<CourseMaterial>
-  save(data: CourseMaterial): Promise<CourseMaterial>
+  save(data: CourseMaterial): Promise<void>
   delete(id: string): Promise<void>
 }

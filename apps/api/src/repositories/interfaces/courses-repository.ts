@@ -49,6 +49,6 @@ export interface CoursesRepository {
   }): Promise<CourseRelations['Basic'][]>
 
   create(data: Prisma.CourseUncheckedCreateInput): Promise<Course>
-  save(data: Course): Promise<Course>
+  save(data: Course): Promise<void>
   delete(id: string): Promise<void>
 }

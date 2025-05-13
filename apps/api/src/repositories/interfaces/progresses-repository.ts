@@ -35,6 +35,6 @@ export interface ProgressesRepository {
   }): Promise<ProgressRelations['Basic'][]>
 
   create(data: Prisma.ProgressUncheckedCreateInput): Promise<Progress>
-  save(data: Progress): Promise<Progress>
+  save(data: Progress): Promise<void>
   delete(id: string): Promise<void>
 }

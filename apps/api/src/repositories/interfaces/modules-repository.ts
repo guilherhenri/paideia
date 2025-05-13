@@ -24,6 +24,6 @@ export interface ModulesRepository {
   list(params?: { courseId?: string }): Promise<ModuleRelations['Basic'][]>
 
   create(data: Prisma.ModuleUncheckedCreateInput): Promise<Module>
-  save(data: Module): Promise<Module>
+  save(data: Module): Promise<void>
   delete(id: string): Promise<void>
 }

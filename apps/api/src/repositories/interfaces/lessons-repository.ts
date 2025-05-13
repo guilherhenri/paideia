@@ -28,6 +28,6 @@ export interface LessonsRepository {
   list(params?: { moduleId?: string }): Promise<LessonRelations['Basic'][]>
 
   create(data: Prisma.LessonUncheckedCreateInput): Promise<Lesson>
-  save(data: Lesson): Promise<Lesson>
+  save(data: Lesson): Promise<void>
   delete(id: string): Promise<void>
 }
