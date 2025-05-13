@@ -130,6 +130,13 @@ exports.Prisma.UserScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  provider_account_id: 'provider_account_id',
+  user_id: 'user_id'
+};
+
 exports.Prisma.CourseScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -208,6 +215,10 @@ exports.Role = exports.$Enums.Role = {
   STUDENT: 'STUDENT'
 };
 
+exports.AccountProvider = exports.$Enums.AccountProvider = {
+  GMAIL: 'GMAIL'
+};
+
 exports.CourseStatus = exports.$Enums.CourseStatus = {
   draft: 'draft',
   pending: 'pending',
@@ -222,6 +233,7 @@ exports.ProviderType = exports.$Enums.ProviderType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Account: 'Account',
   Course: 'Course',
   Module: 'Module',
   Lesson: 'Lesson',

@@ -23,12 +23,25 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  accounts    Account[]
   courses     Course[]     @relation("instructor_courses")
   enrollments Enrollment[]
   progress    Progress[]
 
   @@index([role])
   @@map("users")
+}
+
+model Account {
+  id                  String          @id @default(uuid())
+  provider            AccountProvider
+  provider_account_id String          @unique
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([provider, user_id])
+  @@map("accounts")
 }
 
 model Course {
@@ -97,9 +110,9 @@ model Enrollment {
   user_id String
   user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
+  @@unique([user_id, course_id])
   @@index([user_id])
   @@index([course_id])
-  @@index([user_id, course_id])
   @@map("enrollments")
 }
 
@@ -116,9 +129,9 @@ model Progress {
   lesson_id String
   lesson    Lesson @relation(fields: [lesson_id], references: [id], onDelete: Cascade)
 
+  @@unique([user_id, lesson_id])
   @@index([user_id])
   @@index([lesson_id])
-  @@index([user_id, lesson_id])
   @@map("progresses")
 }
 
@@ -137,6 +150,10 @@ enum Role {
   ADMIN
   INSTRUCTOR
   STUDENT
+}
+
+enum AccountProvider {
+  GMAIL
 }
 
 enum CourseStatus {
