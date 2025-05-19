@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
 }
 
 datasource db {
@@ -15,13 +14,14 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  name       String
-  picture    String?
-  role       Role
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String
+  picture       String?
+  role          Role
+  password_hash String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
 
   accounts    Account[]
   courses     Course[]     @relation("instructor_courses")
