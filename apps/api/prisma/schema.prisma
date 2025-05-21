@@ -18,7 +18,7 @@ model User {
   email         String   @unique
   name          String
   picture       String?
-  role          Role
+  role          Role     @default(STUDENT)
   password_hash String?
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
@@ -82,13 +82,13 @@ model Module {
 }
 
 model Lesson {
-  id                String       @id @default(uuid())
+  id                String        @id @default(uuid())
   title             String
   description       String
   comment           String?
   order             Int
   provider_video_id String
-  provider_type     ProviderType
+  provider_type     VideoProvider
 
   module_id String
   module    Module @relation(fields: [module_id], references: [id], onDelete: Cascade)
@@ -153,7 +153,7 @@ enum Role {
 }
 
 enum AccountProvider {
-  GMAIL
+  GITHUB
 }
 
 enum CourseStatus {
@@ -163,7 +163,7 @@ enum CourseStatus {
   rejected
 }
 
-enum ProviderType {
+enum VideoProvider {
   youtube
   panda
 }
