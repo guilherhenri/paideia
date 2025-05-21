@@ -1,3 +1,4 @@
+import { env } from '@paideia/env'
 import { z } from 'zod'
 
 import { getErrorResponses } from '@/lib/errors/error-responses'
@@ -53,7 +54,29 @@ export async function authenticateWithPassword(app: FastifyTypedInstance) {
         },
       )
 
-      return reply.status(201).send({ token })
+      const refreshToken = await reply.jwtSign(
+        {
+          sub: user.id,
+        },
+        {
+          sign: {
+            sub: user.id,
+            expiresIn: '7d',
+          },
+        },
+      )
+
+      return reply
+        .setCookie(env.REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
+          path: '/',
+          secure: true,
+          httpOnly: true,
+          sameSite: 'none',
+        })
+        .status(200)
+        .send({
+          token,
+        })
     },
   )
 }
