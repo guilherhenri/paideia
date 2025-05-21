@@ -12,4 +12,4 @@ export class AppError extends Error {
   }
 }
 
-export type AppErrorResponse = Omit<AppError, 'name'>
+export type AppErrorResponse = Omit<AppError, 'name' | 'status'>

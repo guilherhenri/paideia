@@ -11,7 +11,6 @@ export const errorHandler: FastifyErrorHandler = (error, _, reply) => {
       code: 'INVALID_INPUT',
       message:
         error.validation.length > 1 ? 'Campos inválidos.' : 'Campo inválido.',
-      status: error.statusCode ?? 400,
       details: {
         fields: error.validation.map(
           (err) => err.instancePath.replace('/', '') ?? 'unknown',
@@ -24,7 +23,6 @@ export const errorHandler: FastifyErrorHandler = (error, _, reply) => {
     return reply.status(error.status).send({
       code: error.code,
       message: error.message,
-      status: error.status,
     } as AppErrorResponse)
   }
 
@@ -33,6 +31,5 @@ export const errorHandler: FastifyErrorHandler = (error, _, reply) => {
   return reply.status(500).send({
     code: 'INTERNAL_SERVER_ERROR',
     message: 'Erro interno do servidor.',
-    status: 500,
   } as AppErrorResponse)
 }
