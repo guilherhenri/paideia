@@ -5,6 +5,7 @@ export const errorCodes = {
   FORBIDDEN: 'FORBIDDEN',
   CONFLICT: 'CONFLICT',
   INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  TOKEN_INVALID: 'TOKEN_INVALID',
 } as const
 
 export type ErrorCode = keyof typeof errorCodes
