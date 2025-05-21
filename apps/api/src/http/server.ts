@@ -28,7 +28,7 @@ app.register(fastifyJwt, {
   },
   verify: {
     extractToken: (request) => {
-      if (request.url === '/token/refresh') {
+      if (request.url === '/api/token/refresh') {
         return request.cookies && request.cookies[env.REFRESH_TOKEN_COOKIE_NAME]
       } else {
         return (
