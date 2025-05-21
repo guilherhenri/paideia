@@ -4,8 +4,8 @@
   "private": true,
   "license": "MIT",
   "exports": {
-    "./base": "./base.js",
-    "./next": "./next.js",
-    "./node": "./node.js"
+    "./base": "./base.json",
+    "./next": "./next.json",
+    "./node": "./node.json"
   }
 }
