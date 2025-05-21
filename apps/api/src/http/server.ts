@@ -50,17 +50,18 @@ app.setErrorHandler(errorHandler)
 app.register(fastifyCors, { origin: '*' })
 
 app.register(fastifySwagger, {
-  swagger: {
+  openapi: {
     info: {
       title: 'Paideia API',
       version: '1.0.0',
     },
-    securityDefinitions: {
-      Authorization: {
-        type: 'apiKey',
-        in: 'header',
-        name: 'Authorization',
-        description: 'JWT obtained from authentication route.',
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
       },
     },
   },
