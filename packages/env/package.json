@@ -1,0 +1,23 @@
+{
+  "name": "@paideia/env",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "devDependencies": {
+    "@paideia/eslint-config": "workspace:*",
+    "@paideia/prettier": "workspace:*",
+    "@paideia/tsconfig": "workspace:*",
+    "@types/node": "^22.15.17"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@paideia/eslint-config/base"
+    ]
+  },
+  "prettier": "@paideia/prettier",
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.13.4",
+    "zod": "^3.24.4"
+  }
+}
