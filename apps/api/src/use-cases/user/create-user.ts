@@ -1,24 +1,50 @@
-import { randomUUID } from 'crypto'
+import type { Role, User } from '@prisma/client'
+import { hash } from 'bcryptjs'
 
-interface User {
-  id: string
-  name: string
-  email: string
-}
-
-const users: User[] = []
+import { type Either, left, right } from '@/either'
+import { ConflictFoundError } from '@/lib/errors/conflict-error'
+import type { UsersRepository } from '@/repositories/interfaces/users-repository'
 
 interface CreateUserUseCaseRequest {
-  name: string
   email: string
+  name: string
+  role: Role
+  password?: string
+  picture?: string
 }
 
+export type CreateUserUseCaseResponse = Either<
+  ConflictFoundError,
+  {
+    user: User
+  }
+>
+
 export class CreateUserUseCase {
-  async execute({ name, email }: CreateUserUseCaseRequest): Promise<void> {
-    users.push({
-      id: randomUUID(),
-      name,
+  constructor(private readonly usersRepository: UsersRepository) {}
+
+  async execute({
+    email,
+    name,
+    role,
+    password,
+    picture,
+  }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
+    const existingUser = await this.usersRepository.findByEmail(email)
+    if (existingUser) {
+      return left(new ConflictFoundError('E-mail já registrado.'))
+    }
+
+    const passwordHash = password ? await hash(password, 6) : null
+
+    const user = await this.usersRepository.create({
       email,
+      name,
+      role,
+      password_hash: passwordHash,
+      picture: picture ?? null,
     })
+
+    return right({ user })
   }
 }
