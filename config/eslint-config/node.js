@@ -5,5 +5,6 @@ module.exports = {
   rules: {
     'no-useless-constructor': "off",
     'simple-import-sort/imports': 'error',
+    "@typescript-eslint/no-empty-object-type": "off"
   },
 }
